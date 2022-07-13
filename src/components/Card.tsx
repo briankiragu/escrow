@@ -3,7 +3,7 @@
 import { Component, onMount, Show } from 'solid-js';
 import { ITodo } from '../interfaces/models';
 
-const Card: Component<{ todo: ITodo }> = (props) => {
+const Card: Component<{ todo: ITodo; handleToggle: Function }> = (props) => {
   // Get a reference to the HTML element.
   let cardEl: HTMLDivElement;
 
@@ -31,6 +31,7 @@ const Card: Component<{ todo: ITodo }> = (props) => {
       ref={cardEl!}
       draggable={true}
       class="w-full h-28 rounded-lg bg-indigo-500 mb-3 px-6 py-4 cursor-move"
+      onClick={() => props.handleToggle(props.todo.id)}
     >
       <h3 class="mb-1 text-3xl text-gray-50 font-bold">{props.todo.title}</h3>
       <Show when={props.todo.completed_at !== null}>
