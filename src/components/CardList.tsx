@@ -4,6 +4,7 @@ import { Component, createMemo, For, lazy, onMount } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { ITodo } from '../interfaces/models';
 
+// Import the Card component dynamically.
 const Card = lazy(() => import('./Card'));
 
 const CardList: Component = () => {
@@ -87,11 +88,15 @@ const CardList: Component = () => {
       {/* Completed TODOs */}
       <div
         ref={completedEl!}
-        class="transition-colors min-h-[150px] border-2 border-dashed border-slate-300 hover:border-slate-500 rounded-lg bg-slate-100 p-3 flex flex-col justify-end items-start"
+        class="transition-colors min-h-[150px] border-2 border-dashed border-slate-300 hover:border-slate-500 rounded-lg bg-slate-100 px-2 py-1 flex flex-col justify-end items-start"
       >
-        <For each={completed()}>
-          {(todo) => <Card todo={todo} handleToggle={handleToggleCompletion} />}
-        </For>
+        <div class="p-1">
+          <For each={completed()}>
+            {(todo) => (
+              <Card todo={todo} handleToggle={handleToggleCompletion} />
+            )}
+          </For>
+        </div>
         <h5 class="text-gray-400 font-medium">Drag compeleted tasks here.</h5>
       </div>
     </div>
