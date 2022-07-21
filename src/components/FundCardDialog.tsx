@@ -1,8 +1,13 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
-import { Component, createMemo, Show } from 'solid-js';
+import { Component, createMemo, For, lazy, Show } from 'solid-js';
 import useFormatting from '@/composables/useFormatting';
 import { IFund } from '@/interfaces/models';
+
+// Lazy load the dialog component.
+const FundCardTransaction = lazy(
+  () => import('@/components/FundCardTransaction')
+);
 
 const FundCardDialog: Component<{ fund: IFund }> = (props) => {
   // We need to format the amounts according to the currency and region.
@@ -34,7 +39,7 @@ const FundCardDialog: Component<{ fund: IFund }> = (props) => {
     <div class="p-6">
       {/* Basic information */}
       <div class="mb-4 flex flex-col">
-        <h4 class="text-teal-800 text-3xl font-semibold">{props.fund.name}</h4>
+        <h4 class="text-teal-700 text-3xl font-semibold">{props.fund.name}</h4>
         <span class="text-teal-500 font-semibold capitalize">
           {props.fund.type}
         </span>
@@ -42,7 +47,7 @@ const FundCardDialog: Component<{ fund: IFund }> = (props) => {
       </div>
 
       {/* Fiscal information */}
-      <div class="flex flex-col text-slate-600">
+      <div class="mb-4 flex flex-col text-slate-600">
         {/* Expected total (if was provided during project creation) */}
         <Show when={props.fund.expected_total !== null}>
           <div class="mb-1 flex justify-between items-end tracking-tight">
@@ -70,6 +75,16 @@ const FundCardDialog: Component<{ fund: IFund }> = (props) => {
             </span>
           </div>
         </Show>
+      </div>
+
+      {/* Transaction ledger */}
+      <div class="flex flex-col">
+        <h6 class="mb-4 text-teal-500 text-xl font-medium">Transactions</h6>
+
+        {/* List of transactions */}
+        <For each={props.fund.transactions}>
+          {(transaction) => <FundCardTransaction transaction={transaction} />}
+        </For>
       </div>
     </div>
   );

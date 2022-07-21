@@ -4,7 +4,7 @@ export default () => {
    *
    * @param {number} value The amount of money to format
    * @param {string} currency The currency to use. Defaults to 'KES'
-   * @param {string} region The region to format with. Defaults to 'en-GB'
+   * @param {string} locale The locale to format with. Defaults to 'en-GB'
    *
    * @returns {string} Formatted currency string
    * @author Brian Kariuki <bkariuki@hotmail.com>
@@ -12,9 +12,9 @@ export default () => {
   const toRegionalCurrency = (
     value: number,
     currency: string = 'KES',
-    region: string = 'en-GB'
+    locale: string = 'en-GB'
   ): string =>
-    value.toLocaleString(region, {
+    value.toLocaleString(locale, {
       style: 'currency',
       currency,
     });
@@ -22,15 +22,16 @@ export default () => {
   /**
    * Format a date object to a human-readable long string.
    *
-   * @param {Date} date Date to format
+   * @param {Date}   date Date to format
+   * @param {string} locale Region to use for formatting. Defaults to 'en-GB'
    *
    * @returns {string}
    * @author: Brian Kariuki <bkariuki@hotmail.com>
    */
-  const toHumanDate = (date: Date): string =>
-    new Intl.DateTimeFormat('en-GB', {
+  const toHumanDate = (date: Date, locale: string = 'en-GB'): string =>
+    new Intl.DateTimeFormat(locale, {
       dateStyle: 'full',
-      timeStyle: 'long',
+      timeStyle: 'short',
     }).format(date);
 
   return { toRegionalCurrency, toHumanDate };
