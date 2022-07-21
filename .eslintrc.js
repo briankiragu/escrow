@@ -1,4 +1,7 @@
 module.exports = {
+  settings: {
+    'import/extensions': ['.js', '.ts', '.jsx', '.tsx'],
+  },
   env: {
     browser: true,
     es2021: true,
@@ -14,5 +17,18 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint'],
-  rules: {},
+  rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        ts: 'never',
+        jsx: 'never',
+        tsx: 'never',
+      },
+    ],
+  },
 };

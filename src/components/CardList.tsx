@@ -88,15 +88,11 @@ const CardList: Component = () => {
       {/* Completed TODOs */}
       <div
         ref={completedEl!}
-        class="transition-colors min-h-[150px] border-2 border-dashed border-slate-300 hover:border-slate-500 rounded-lg bg-slate-100 px-2 py-1 flex flex-col justify-end items-start"
+        class="transition-colors min-h-[150px] border-2 border-dashed border-slate-300 hover:border-slate-500 rounded-lg bg-slate-100 p-2 flex flex-col justify-end items-start"
       >
-        <div class="p-1">
-          <For each={completed()}>
-            {(todo) => (
-              <Card todo={todo} handleToggle={handleToggleCompletion} />
-            )}
-          </For>
-        </div>
+        <For each={completed()}>
+          {(todo) => <Card todo={todo} handleToggle={handleToggleCompletion} />}
+        </For>
         <h5 class="text-gray-400 font-medium">Drag compeleted tasks here.</h5>
       </div>
     </div>
