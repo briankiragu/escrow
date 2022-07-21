@@ -64,7 +64,7 @@ const FundCard: Component<{ fund: IFund }> = (props) => {
         <dialog
           ref={dialogEl!}
           modal-mode="mega"
-          class="w-full shadow-lg rounded-t-md p-0"
+          class="w-full lg:w-8/12 shadow-lg rounded-t-lg p-0"
         >
           <FundCardDialog
             fund={props.fund}
