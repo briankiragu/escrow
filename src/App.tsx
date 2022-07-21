@@ -22,11 +22,45 @@ const App: Component = () => {
       type: 'individual',
       name: 'House Deposit',
       description: null,
-      created_at: '21-07-2022: 11:31:00',
+      created_at: '20-07-2022: 11:31:00',
       updated_at: '21-07-2022: 11:31:00',
+      expected_total: 4000,
       transactions: [
         {
           id: '1',
+          amount: 2000,
+          currency: 'KES',
+          created_at: '20-07-2022: 11:31:00',
+          updated_at: null,
+        },
+        {
+          id: '2',
+          amount: 1000,
+          currency: 'KES',
+          created_at: '21-07-2022: 11:31:00',
+          updated_at: null,
+        },
+      ],
+    },
+    {
+      id: '2',
+      user_id: '2',
+      type: 'collaborative',
+      name: 'Birthday Plan',
+      description: null,
+      created_at: '20-07-2022: 11:31:00',
+      updated_at: '21-07-2022: 11:31:00',
+      expected_total: null,
+      transactions: [
+        {
+          id: '3',
+          amount: 2000,
+          currency: 'KES',
+          created_at: '20-07-2022: 11:31:00',
+          updated_at: null,
+        },
+        {
+          id: '4',
           amount: 1000,
           currency: 'KES',
           created_at: '21-07-2022: 11:31:00',
@@ -37,23 +71,25 @@ const App: Component = () => {
   ]);
 
   return (
-    <div class="p-6">
+    <div class="min-h-screen p-6 bg-[whitesmoke]">
       {/* Totals Section */}
-      <section class="mb-8 flex gap-4 flex-col">
+      <section class="h-[410px] mb-6 flex gap-4 flex-col">
         {/* Introductory text */}
-        <h1 class="mb-6 text-teal-800 text-7xl font-extrabold">At a glance</h1>
+        <h1 class="mb-4 text-teal-800 text-7xl font-extrabold">At a glance</h1>
 
         <CardTotalIncoming amount={totalIncoming()} />
         <CardTotalOutgoing amount={totalOutgoing()} />
       </section>
 
       {/* Projects Section */}
-      <section class="flex flex-col">
+      <section>
         {/* Introductory text */}
-        <h2 class="mb-2 text-teal-800 text-4xl font-bold">Your funds</h2>
+        <h2 class="mb-3 text-teal-700 text-3xl font-bold">Your funds</h2>
 
-        {/* Fund cards */}
-        <For each={funds}>{(fund) => <FundCard fund={fund} />}</For>
+        <div class="flex flex-col gap-4">
+          {/* Fund cards */}
+          <For each={funds}>{(fund) => <FundCard fund={fund} />}</For>
+        </div>
       </section>
     </div>
   );

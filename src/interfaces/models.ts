@@ -20,6 +20,7 @@ export interface IFund {
   type: 'individual' | 'collaborative';
   name: string;
   description: string | null;
+  expected_total: number | null;
   transactions: ITransaction[];
   created_at: string;
   updated_at: string | null;
