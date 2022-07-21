@@ -1,6 +1,6 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
-import { Component, createMemo, For, lazy, Show } from 'solid-js';
+import { Component, createMemo, createSignal, For, lazy, Show } from 'solid-js';
 import useFormatting from '@/composables/useFormatting';
 import { IFund } from '@/interfaces/models';
 
@@ -19,6 +19,9 @@ const FundCardDialog: Component<{
   // Get a reference to the phone number and amount inputs on the dialog.
   let inputPhoneEl: HTMLInputElement;
   let inputAmountEl: HTMLInputElement;
+
+  // We need to display or hide the form in the dialog.
+  const [isFormVisible, setIsFormVisible] = createSignal(false);
 
   /**
    * Add all the transactions to a total. Memoize it to avoid re-computing.
@@ -74,7 +77,7 @@ const FundCardDialog: Component<{
       </div>
 
       {/* Fiscal information */}
-      <div class="overflow-y-scroll max-h-[50vh] p-6 flex flex-col text-slate-600">
+      <div class="transition-all overflow-y-scroll max-h-[30vh] p-6 flex flex-col text-slate-600">
         {/* Expected total (if was provided during project creation) */}
         <Show when={props.fund.expected_total !== null}>
           <div class="mb-1 flex justify-between items-end tracking-tight">
@@ -116,65 +119,85 @@ const FundCardDialog: Component<{
         </div>
       </div>
 
+      {/* Button to toggle the dialog form */}
+      <Show when={!isFormVisible()}>
+        <div class="shadow p-6">
+          <button
+            class="transition-shadow w-full shadow rounded px-10 py-2.5 bg-teal-500 text-blue-50 font-semibold hover:shadow-lg"
+            onClick={() => setIsFormVisible(true)}
+          >
+            Deposit
+          </button>
+        </div>
+      </Show>
+
       {/* Dialog actions */}
-      <form method="dialog" class="bg-teal-100">
-        {/* Amount to deposit. */}
-        <article class="px-6 py-4 grid grid-cols-1 gap-4">
-          {/* Phone number */}
-          <div class="col-span-1">
-            <label for="amount" class="text-sm text-teal-500 tracking-tighter">
-              Phone number to receieve payment request
-            </label>
-            <input
-              ref={inputPhoneEl!}
-              type="number"
-              id="amount"
-              name="amount"
-              placeholder="254 712 345 678"
-              class="mt-1 w-full shadow rounded px-6 py-3 bg-teal-50 focus:outline-teal-300"
-              autocomplete="mobile"
-            />
-          </div>
+      <Show when={isFormVisible()}>
+        <form method="dialog" class="transition-transform bg-teal-100">
+          {/* Amount to deposit. */}
+          <article class="px-6 py-4 grid grid-cols-1 gap-4">
+            {/* Phone number */}
+            <div class="col-span-1">
+              <label
+                for="amount"
+                class="text-sm text-teal-500 tracking-tighter"
+              >
+                Phone number to receieve payment request
+              </label>
+              <input
+                ref={inputPhoneEl!}
+                type="number"
+                id="amount"
+                name="amount"
+                placeholder="254 712 345 678"
+                class="mt-1 w-full shadow rounded px-6 py-3 bg-teal-50 focus:outline-teal-300"
+                autocomplete="mobile"
+              />
+            </div>
 
-          {/* Amount to deposit */}
-          <div class="col-span-1">
-            <label for="amount" class="text-sm text-teal-500 tracking-tighter">
-              Amount to deposit into the escrow fund
-            </label>
-            <input
-              ref={inputAmountEl!}
-              type="number"
-              id="amount"
-              name="amount"
-              min="50"
-              placeholder="Amount to deposit"
-              class="mt-1 w-full shadow rounded px-6 py-3 bg-teal-50 focus:outline-teal-300"
-            />
-          </div>
-        </article>
+            {/* Amount to deposit */}
+            <div class="col-span-1">
+              <label
+                for="amount"
+                class="text-sm text-teal-500 tracking-tighter"
+              >
+                Amount to deposit into the escrow fund
+              </label>
+              <input
+                ref={inputAmountEl!}
+                type="number"
+                id="amount"
+                name="amount"
+                min="50"
+                placeholder="Amount to deposit"
+                class="mt-1 w-full shadow rounded px-6 py-3 bg-teal-50 focus:outline-teal-300"
+              />
+            </div>
+          </article>
 
-        {/* Submission buttons */}
-        <footer class="shadow px-6 py-4">
-          <menu class="flex justify-between">
-            <button
-              autofocus
-              type="reset"
-              class="px-5 py-2.5 text-slate-500 font-medium"
-              onClick={() => props.handleCloseDialog('cancel')}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              value="confirm"
-              class="transition-shadow shadow rounded px-10 py-2.5 bg-teal-500 text-blue-50 font-semibold hover:shadow-lg"
-              onClick={handleFundDeposit}
-            >
-              Deposit
-            </button>
-          </menu>
-        </footer>
-      </form>
+          {/* Submission buttons */}
+          <footer class="shadow px-6 py-4">
+            <menu class="flex justify-between">
+              <button
+                autofocus
+                type="reset"
+                class="px-5 py-2.5 text-slate-500 font-medium"
+                onClick={() => props.handleCloseDialog('cancel')}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                value="confirm"
+                class="transition-shadow shadow rounded px-10 py-2.5 bg-teal-500 text-blue-50 font-semibold hover:shadow-lg"
+                onClick={handleFundDeposit}
+              >
+                Deposit
+              </button>
+            </menu>
+          </footer>
+        </form>
+      </Show>
     </div>
   );
 };

@@ -71,7 +71,7 @@ const App: Component = () => {
   ]);
 
   return (
-    <div class="min-h-screen p-6 bg-[whitesmoke]">
+    <div class="min-h-screen p-6 lg:px-28 py-12 bg-[whitesmoke]">
       {/* Totals Section */}
       <section class="h-[410px] mb-6 flex gap-4 flex-col">
         {/* Introductory text */}

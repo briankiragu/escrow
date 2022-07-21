@@ -15,7 +15,7 @@ const FundCardTransaction: Component<{ transaction: ITransaction }> = (
       <span class="text-slate-500 text-sm font-medium">
         {toHumanDate(new Date(props.transaction.created_at))}
       </span>
-      <span class="text-xl text-slate-500 font-bold">
+      <span class="text text-slate-500 font-semibold">
         {toRegionalCurrency(props.transaction.amount)}
       </span>
     </div>
