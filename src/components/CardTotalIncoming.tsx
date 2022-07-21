@@ -4,7 +4,7 @@ import { Component } from 'solid-js';
 import useFormatting from '@/composables/useFormatting';
 
 const CardTotalIncoming: Component<{ amount: number }> = (props) => {
-  // Get formatting methods.
+  // We need to display the amount in the correct currency and regional format.
   const { toRegionalCurrency } = useFormatting();
 
   return (

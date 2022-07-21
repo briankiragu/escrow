@@ -38,17 +38,21 @@ const App: Component = () => {
 
   return (
     <div class="p-6">
-      {/* Introductory text */}
-      <h1 class="mb-6 text-teal-800 text-7xl font-extrabold">At a glance</h1>
-
       {/* Totals Section */}
-      <section class="flex gap-4 flex-col">
+      <section class="mb-8 flex gap-4 flex-col">
+        {/* Introductory text */}
+        <h1 class="mb-6 text-teal-800 text-7xl font-extrabold">At a glance</h1>
+
         <CardTotalIncoming amount={totalIncoming()} />
         <CardTotalOutgoing amount={totalOutgoing()} />
       </section>
 
       {/* Projects Section */}
-      <section class="p-5">
+      <section class="flex flex-col">
+        {/* Introductory text */}
+        <h2 class="mb-2 text-teal-800 text-4xl font-bold">Your funds</h2>
+
+        {/* Fund cards */}
         <For each={funds}>{(fund) => <FundCard fund={fund} />}</For>
       </section>
     </div>
