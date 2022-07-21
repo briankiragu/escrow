@@ -1,7 +1,4 @@
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
 import { Component, onMount, Show } from 'solid-js';
-
 import useFormatting from '@/composables/useFormatting';
 import { ITodo } from '@/interfaces/models';
 

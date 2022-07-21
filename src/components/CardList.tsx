@@ -61,9 +61,9 @@ const CardList: Component<{
   });
 
   return (
-    <div>
+    <>
       {/* Incomplete TODOs */}
-      <div class="mb-10 px-3">
+      <div class="mb-6">
         <For each={incompleted()}>
           {(todo) => (
             <Card todo={todo} handleToggle={props.handleToggleCompletion} />
@@ -83,7 +83,7 @@ const CardList: Component<{
         </For>
         <h5 class="text-gray-400 font-medium">Drag compeleted tasks here.</h5>
       </div>
-    </div>
+    </>
   );
 };
 

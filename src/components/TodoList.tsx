@@ -1,4 +1,4 @@
-import { Component, JSXElement, lazy } from 'solid-js';
+import { Component, lazy } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { ITodo } from '@/interfaces/models';
 
@@ -19,13 +19,13 @@ const TodoList: Component = () => {
   /**
    * Handle when a user inputs into the text field.
    *
-   * @param {string} title Title provided by user.
+   * @param {HTMLInputElement} input User input element.
    * @returns {void}
    * @author Brian Kariuki <bkariuki@hotmail.com>
    */
-  const handleNewTodo = (title: string): void => {
+  const handleNewTodo = (input: HTMLInputElement): void => {
     // Skip if no input (empty string) was provided.
-    if (!title) return;
+    if (!input.value.trim()) return;
 
     // Add the TODO via the setter.
     setTodos([
@@ -33,15 +33,25 @@ const TodoList: Component = () => {
       ...[
         {
           id: todos.length + 1,
-          title,
+          title: input.value.trim(),
           completed_at: null,
         },
       ],
     ]);
+
+    // Clear the input field.
+    input.value = '';
   };
 
-  // When a card is clicked, mark is an either complete or incomplete.
-  const handleToggleCompletion = (id: number) => {
+  /**
+   * When a card is clicked, mark is an either complete or incomplete.
+   *
+   * @param {number} id ID of the todo to toggle.
+   *
+   * @returns {void}
+   * @author Brian Kariuki <bkariuki@hotmail.com>
+   */
+  const handleToggleCompletion = (id: number): void => {
     setTodos(
       (todo) => todo.id === id,
       'completed_at',
@@ -49,45 +59,32 @@ const TodoList: Component = () => {
     );
   };
 
-  /**
-   * Function to format Date object into human-readable strings.
-   *
-   * @param {Date} date Date object to format
-   * @returns {string} Formatted date
-   * @author Brian Kariuki <bkariuki@hotmail.com>
-   */
-  const formatDate = (date: Date): string =>
-    new Intl.DateTimeFormat('en-GB', {
-      dateStyle: 'full',
-      timeStyle: 'long',
-    }).format(date);
-
-  /**
-   * Fallback JSX for TODOs that are not completed yet.
-   *
-   * @returns {JSXElement} JSX Element
-   * @author Brian Kariuki <bkariuki@hotmail.com>
-   */
-  const fallbackCompletedAt = (): JSXElement => (
-    <span class="text-sm text-gray-400">Incomplete</span>
-  );
-
   // Return JSX template.
   return (
-    <div>
-      <input
-        ref={inputEl!}
-        type="text"
-        name="title"
-        id="title"
-        placeholder="New todo"
-        class="bg-slate-100 rounded-md mb-3 px-5 py-2"
-        autofocus
-        onInput={() => handleNewTodo(inputEl.value.trim())}
-      />
+    <>
+      <div class="mb-6 flex justify-between gap-6">
+        {/* Input */}
+        <input
+          ref={inputEl!}
+          type="text"
+          id="title"
+          name="title"
+          placeholder="New todo"
+          class="w-full h-12 shadow bg-slate-100 rounded px-4 text-slate-500 focus:outline-none"
+          autofocus
+        />
+
+        {/* Submit button */}
+        <button
+          class="h-12 shadow rounded bg-blue-200 px-6 text-slate-600 font-semibold"
+          onClick={() => handleNewTodo(inputEl!)}
+        >
+          New
+        </button>
+      </div>
 
       <CardList todos={todos} handleToggleCompletion={handleToggleCompletion} />
-    </div>
+    </>
   );
 };
 
