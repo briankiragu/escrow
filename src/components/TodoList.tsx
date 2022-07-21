@@ -1,3 +1,5 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import { Component, lazy } from 'solid-js';
 import { createStore } from 'solid-js/store';
 import { ITodo } from '@/interfaces/models';
@@ -40,7 +42,7 @@ const TodoList: Component = () => {
     ]);
 
     // Clear the input field.
-    input.value = '';
+    input.setAttribute('value', '');
   };
 
   /**
@@ -61,8 +63,13 @@ const TodoList: Component = () => {
 
   // Return JSX template.
   return (
-    <>
-      <div class="mb-6 flex justify-between gap-6">
+    <div class="lg:px-20 lg:py-8">
+      {/* Welcome message */}
+      <h1 class="mb-10 text-7xl text-blue-900 font-extrabold">
+        Getting things done...
+      </h1>
+
+      <div class="mb-6 lg:mb-12 flex justify-between gap-4">
         {/* Input */}
         <input
           ref={inputEl!}
@@ -70,13 +77,13 @@ const TodoList: Component = () => {
           id="title"
           name="title"
           placeholder="New todo"
-          class="w-full h-12 shadow bg-slate-100 rounded px-4 text-slate-500 focus:outline-none"
+          class="transition-shadow w-full h-12 shadow-md bg-slate-100 rounded px-4 text-slate-500 hover:shadow-lg focus:outline-none"
           autofocus
         />
 
         {/* Submit button */}
         <button
-          class="h-12 shadow rounded bg-blue-200 px-6 text-slate-600 font-semibold"
+          class="transition-shadow h-12 shadow-md rounded bg-blue-200 px-6 text-slate-600 font-semibold hover:shadow-lg"
           onClick={() => handleNewTodo(inputEl!)}
         >
           New
@@ -84,7 +91,7 @@ const TodoList: Component = () => {
       </div>
 
       <CardList todos={todos} handleToggleCompletion={handleToggleCompletion} />
-    </>
+    </div>
   );
 };
 

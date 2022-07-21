@@ -1,8 +1,10 @@
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
 import { Component, createMemo, For, lazy, onMount } from 'solid-js';
-import { ITodo } from '../interfaces/models';
+import { ITodo } from '@/interfaces/models';
 
 // Import the Card component dynamically.
-const Card = lazy(() => import('./Card'));
+const Card = lazy(() => import('@/components/Card'));
 
 const CardList: Component<{
   todos: readonly ITodo[];
@@ -11,17 +13,18 @@ const CardList: Component<{
   // Create a reference to the draggable area for completed tasks.
   let completedEl: HTMLDivElement;
 
-  // Filter only the completed TODOs.
+  // Filter only the completed TODOs as a memo since it could be expensive.
   const completed = createMemo(() =>
     props.todos.filter((todo) => todo.completed_at !== null)
   );
 
-  // Filter only the incompleted TODOs.
+  // Filter only the incompleted TODOs as a memo since it could be expensive.
   const incompleted = createMemo(() =>
     props.todos.filter((todo) => todo.completed_at === null)
   );
 
-  // Attach an event listener to when the draggable area experiences drag events.
+  // We want to make sure that the completedEl is mounted on the DOM
+  // before we add event listeners to it.
   onMount(() => {
     // When a draggable element enters over it, darken the borders to indicate it's droppable.
     completedEl.addEventListener('dragenter', () => {
