@@ -1,21 +1,21 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import { Component, onMount, Show } from 'solid-js';
-import { ITodo } from '../interfaces/models';
+
+import useFormatting from '@/composables/useFormatting';
+import { ITodo } from '@/interfaces/models';
 
 const Card: Component<{ todo: ITodo; handleToggle: Function }> = (props) => {
+  // Formatting methods.
+  const { toHumanDate } = useFormatting();
+
   // Get a reference to the HTML element.
   let cardEl: HTMLDivElement;
 
   // Whenever a TODO is marked as completed,
   // display the date in a human-readable format.
   const formattedDate = () =>
-    props.todo.completed_at
-      ? new Intl.DateTimeFormat('en-GB', {
-          dateStyle: 'full',
-          timeStyle: 'long',
-        }).format(props.todo.completed_at)
-      : '';
+    props.todo.completed_at ? toHumanDate(props.todo.completed_at) : '';
 
   // Add an event listener for the drag-and-drop events on the card.
   onMount(() => {

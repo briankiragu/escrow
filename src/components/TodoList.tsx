@@ -1,15 +1,20 @@
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
-import { Component, For, JSXElement, Show } from 'solid-js';
+import { Component, JSXElement, lazy } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import { ITodo } from '../interfaces/models';
+import { ITodo } from '@/interfaces/models';
+
+// Lazy load the components.
+const CardList = lazy(() => import('@/components/CardList'));
 
 const TodoList: Component = () => {
   // Get a ref to the input element.
   let inputEl: HTMLInputElement;
 
   // Create the todos with initial data.
-  const [todos, setTodos] = createStore<ITodo[]>([]);
+  const [todos, setTodos] = createStore<ITodo[]>([
+    { id: 1, title: 'Todo 1', completed_at: new Date() },
+    { id: 2, title: 'Todo 2', completed_at: null },
+    { id: 3, title: 'Todo 3', completed_at: null },
+  ]);
 
   /**
    * Handle when a user inputs into the text field.
@@ -35,18 +40,12 @@ const TodoList: Component = () => {
     ]);
   };
 
-  /**
-   * When a use clicks on a TODO, mark it as completed.
-   *
-   * @param {number} id ID of TODO item
-   * @returns {void}
-   * @author Brian Kariuki <bkariuki@hotmail.com>
-   */
-  const handleCompletedTodo = (id: number): void => {
+  // When a card is clicked, mark is an either complete or incomplete.
+  const handleToggleCompletion = (id: number) => {
     setTodos(
       (todo) => todo.id === id,
       'completed_at',
-      () => new Date()
+      (value) => (value ? null : new Date())
     );
   };
 
@@ -87,25 +86,7 @@ const TodoList: Component = () => {
         onInput={() => handleNewTodo(inputEl.value.trim())}
       />
 
-      <div>
-        <For each={todos}>
-          {(todo) => (
-            <div
-              class="cursor-pointer"
-              onClick={() => handleCompletedTodo(todo.id)}
-            >
-              <h3 class="text-2xl text-gray-700 font-bold font-mono">
-                {todo.title}
-              </h3>
-              <Show when={todo.completed_at} fallback={fallbackCompletedAt}>
-                <p class="text-sm text-gray-400">
-                  {formatDate(todo.completed_at!)}
-                </p>
-              </Show>
-            </div>
-          )}
-        </For>
-      </div>
+      <CardList todos={todos} handleToggleCompletion={handleToggleCompletion} />
     </div>
   );
 };

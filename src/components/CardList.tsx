@@ -1,41 +1,25 @@
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
 import { Component, createMemo, For, lazy, onMount } from 'solid-js';
-import { createStore } from 'solid-js/store';
 import { ITodo } from '../interfaces/models';
 
 // Import the Card component dynamically.
 const Card = lazy(() => import('./Card'));
 
-const CardList: Component = () => {
+const CardList: Component<{
+  todos: readonly ITodo[];
+  handleToggleCompletion: Function;
+}> = (props) => {
   // Create a reference to the draggable area for completed tasks.
   let completedEl: HTMLDivElement;
 
-  // Pre-fill the todos with fake data.
-  const [todos, setTodos] = createStore<ITodo[]>([
-    { id: 1, title: 'Todo 1', completed_at: new Date() },
-    { id: 2, title: 'Todo 2', completed_at: null },
-    { id: 3, title: 'Todo 3', completed_at: null },
-  ]);
-
   // Filter only the completed TODOs.
   const completed = createMemo(() =>
-    todos.filter((todo) => todo.completed_at !== null)
+    props.todos.filter((todo) => todo.completed_at !== null)
   );
 
   // Filter only the incompleted TODOs.
   const incompleted = createMemo(() =>
-    todos.filter((todo) => todo.completed_at === null)
+    props.todos.filter((todo) => todo.completed_at === null)
   );
-
-  // When a card is clicked, mark is an either complete or incomplete.
-  const handleToggleCompletion = (id: number) => {
-    setTodos(
-      (todo) => todo.id === id,
-      'completed_at',
-      (value) => (value ? null : new Date())
-    );
-  };
 
   // Attach an event listener to when the draggable area experiences drag events.
   onMount(() => {
@@ -69,7 +53,7 @@ const CardList: Component = () => {
       }
 
       // Mark it as completed.
-      handleToggleCompletion(parseInt(id, 10));
+      props.handleToggleCompletion(parseInt(id, 10));
 
       // Just a best practice when dropping elements.
       return false;
@@ -81,7 +65,9 @@ const CardList: Component = () => {
       {/* Incomplete TODOs */}
       <div class="mb-10 px-3">
         <For each={incompleted()}>
-          {(todo) => <Card todo={todo} handleToggle={handleToggleCompletion} />}
+          {(todo) => (
+            <Card todo={todo} handleToggle={props.handleToggleCompletion} />
+          )}
         </For>
       </div>
 
@@ -91,7 +77,9 @@ const CardList: Component = () => {
         class="transition-colors min-h-[150px] border-2 border-dashed border-slate-300 hover:border-slate-500 rounded-lg bg-slate-100 p-2 flex flex-col justify-end items-start"
       >
         <For each={completed()}>
-          {(todo) => <Card todo={todo} handleToggle={handleToggleCompletion} />}
+          {(todo) => (
+            <Card todo={todo} handleToggle={props.handleToggleCompletion} />
+          )}
         </For>
         <h5 class="text-gray-400 font-medium">Drag compeleted tasks here.</h5>
       </div>
