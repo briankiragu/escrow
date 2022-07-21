@@ -30,6 +30,24 @@ const FundCard: Component<{ fund: IFund }> = (props) => {
     dialogEl.showModal();
   };
 
+  /**
+   * When a user clicks on the card, set the isDialogVisible signal as true
+   * which will trigger it to render via the 'Show' built-in component.
+   * Afterwards, display it using the HTML Dialog API.
+   *
+   * @returns {void}
+   * @author Brian Kariuki <bkariuki@hotmail.com>
+   */
+  const handleCloseDialog = (type: 'close' | 'cancel'): void => {
+    console.log('Being clicked');
+
+    // Close the dialog.
+    dialogEl.close(type);
+
+    // Set the dialog to invisible which will trigger it being de-rendered.
+    setIsDialogVisible(false);
+  };
+
   return (
     <>
       {/* Fund card */}
@@ -48,7 +66,10 @@ const FundCard: Component<{ fund: IFund }> = (props) => {
           modal-mode="mega"
           class="w-full shadow-lg rounded-t-md p-0"
         >
-          <FundCardDialog fund={props.fund} />
+          <FundCardDialog
+            fund={props.fund}
+            handleCloseDialog={handleCloseDialog}
+          />
         </dialog>
       </Show>
     </>

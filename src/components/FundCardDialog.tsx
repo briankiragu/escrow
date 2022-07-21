@@ -9,7 +9,10 @@ const FundCardTransaction = lazy(
   () => import('@/components/FundCardTransaction')
 );
 
-const FundCardDialog: Component<{ fund: IFund }> = (props) => {
+const FundCardDialog: Component<{
+  fund: IFund;
+  handleCloseDialog: Function;
+}> = (props) => {
   // We need to format the amounts according to the currency and region.
   const { toRegionalCurrency } = useFormatting();
 
@@ -36,7 +39,15 @@ const FundCardDialog: Component<{ fund: IFund }> = (props) => {
       : null;
 
   return (
-    <div>
+    <div class="relative">
+      {/* Close button */}
+      <button
+        class="transition-colors absolute top-3 right-3 w-10 h-10 rounded-full bg-teal-300 text-teal-700 text-xl font-bold hover:bg-teal-400"
+        onClick={() => props.handleCloseDialog('close')}
+      >
+        X
+      </button>
+
       {/* Basic information */}
       <div class="mb-4 p-6 bg-teal-200 flex flex-col">
         <h4 class="text-teal-700 text-3xl font-semibold">{props.fund.name}</h4>
