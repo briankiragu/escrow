@@ -36,18 +36,18 @@ const FundCardDialog: Component<{ fund: IFund }> = (props) => {
       : null;
 
   return (
-    <div class="p-6">
+    <div>
       {/* Basic information */}
-      <div class="mb-4 flex flex-col">
+      <div class="mb-4 p-6 bg-teal-200 flex flex-col">
         <h4 class="text-teal-700 text-3xl font-semibold">{props.fund.name}</h4>
-        <span class="text-teal-500 font-semibold capitalize">
+        <span class="text-teal-500 text-xl font-semibold capitalize">
           {props.fund.type}
         </span>
-        <span class="text-slate-400 text-sm">Outgoing</span>
+        <span class="text-slate-800 text-sm">Outgoing</span>
       </div>
 
       {/* Fiscal information */}
-      <div class="mb-4 flex flex-col text-slate-600">
+      <div class="mb-4 px-6 flex flex-col text-slate-600">
         {/* Expected total (if was provided during project creation) */}
         <Show when={props.fund.expected_total !== null}>
           <div class="mb-1 flex justify-between items-end tracking-tight">
@@ -78,8 +78,8 @@ const FundCardDialog: Component<{ fund: IFund }> = (props) => {
       </div>
 
       {/* Transaction ledger */}
-      <div class="flex flex-col">
-        <h6 class="mb-4 text-teal-500 text-xl font-medium">Transactions</h6>
+      <div class="p-6 flex flex-col">
+        <h6 class="mb-2 text-teal-500 text-xl font-medium">Transactions</h6>
 
         {/* List of transactions */}
         <For each={props.fund.transactions}>
