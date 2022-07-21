@@ -31,14 +31,12 @@ const Card: Component<{ todo: ITodo; handleToggle: Function }> = (props) => {
     <div
       ref={cardEl!}
       draggable={true}
-      class="w-full h-28 rounded-lg bg-indigo-500 mb-3 px-6 py-4 cursor-move"
+      class="w-full min-h-[120px] rounded-lg bg-indigo-500 mb-3 px-6 py-4 cursor-move"
       onClick={() => props.handleToggle(props.todo.id)}
     >
       <h3 class="text-4xl text-gray-50 font-bold">{props.todo.title}</h3>
       <Show when={props.todo.completed_at !== null}>
-        <span class="text-sm text-gray-300 font-medium">
-          {formattedDate()}
-        </span>
+        <span class="text-sm text-gray-300 font-medium">{formattedDate()}</span>
       </Show>
     </div>
   );

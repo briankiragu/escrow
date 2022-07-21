@@ -42,7 +42,8 @@ const TodoList: Component = () => {
     ]);
 
     // Clear the input field.
-    input.setAttribute('value', '');
+    // eslint-disable-next-line no-param-reassign
+    input.value = '';
   };
 
   /**
