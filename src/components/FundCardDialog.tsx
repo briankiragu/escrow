@@ -68,21 +68,22 @@ const FundCardDialog: Component<{
       </button>
 
       {/* Basic information */}
-      <div class="p-6 bg-teal-200 flex flex-col">
-        <h4 class="text-teal-700 text-3xl font-semibold">{props.fund.name}</h4>
-        <span class="text-teal-500 text-xl font-semibold capitalize">
+      <div class="p-6 bg-teal-800 flex flex-col">
+        <h4 class="text-teal-50 text-3xl font-bold tracking-tighter">
+          {props.fund.name}
+        </h4>
+        <span class="text-teal-200 text-xl font-semibold tracking-tight capitalize">
           {props.fund.type}
         </span>
-        <span class="text-slate-800 text-sm">Outgoing</span>
       </div>
 
       {/* Fiscal information */}
-      <div class="transition-all overflow-y-scroll max-h-[30vh] p-6 flex flex-col text-slate-600">
+      <div class="transition-all overflow-y-scroll max-h-[30vh] pt-4 px-6 flex flex-col text-slate-600">
         {/* Expected total (if was provided during project creation) */}
         <Show when={props.fund.expected_total !== null}>
           <div class="mb-1 flex justify-between items-end tracking-tight">
             <h5 class="font-medium">Expected Total:</h5>
-            <span class="text-xl font-bold">
+            <span class="text-xl font-bold font-mono">
               {toRegionalCurrency(props.fund.expected_total!)}
             </span>
           </div>
@@ -91,7 +92,7 @@ const FundCardDialog: Component<{
         {/* Current total */}
         <div class="flex justify-between items-end tracking-tight">
           <h5 class="font-medium">Current Total:</h5>
-          <span class="text-xl font-bold">
+          <span class="text-xl font-bold font-mono">
             {toRegionalCurrency(currentTotal())}
           </span>
         </div>
@@ -100,13 +101,13 @@ const FundCardDialog: Component<{
         <Show when={props.fund.expected_total !== null}>
           <div class="flex justify-between items-end tracking-tight">
             <h5 class="font-medium">Balance:</h5>
-            <span class="text-xl font-bold">
+            <span class="text-xl font-bold font-mono">
               {toRegionalCurrency(balance()!)}
             </span>
           </div>
         </Show>
 
-        <h6 class="mt-6 mb-1 text-teal-500 text-xl font-medium">
+        <h6 class="mt-6 mb-1 text-teal-700 text-2xl font-semibold">
           Transactions
         </h6>
 

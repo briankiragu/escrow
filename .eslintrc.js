@@ -1,19 +1,31 @@
+const path = require('path');
+
 module.exports = {
   settings: {
-    'import/extensions': ['.js', '.ts', '.jsx', '.tsx'],
+    alias: {
+      map: [['@', path.resolve(__dirname, 'src')]],
+    },
   },
   env: {
     browser: true,
     es2021: true,
     node: true,
   },
-  extends: ['airbnb-base', 'prettier'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'airbnb-base',
+    'prettier',
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
     ecmaFeatures: {
       jsx: true,
     },
+    tsconfigRootDir: __dirname,
+    project: ['./tsconfig.json'],
     sourceType: 'module',
   },
   plugins: ['@typescript-eslint'],

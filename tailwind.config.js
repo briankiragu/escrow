@@ -13,8 +13,8 @@ module.exports = {
           ...defaultTheme.fontFamily.sans,
         ],
         mono: [
-          'Fira Code',
-          'Fira Code-fallback',
+          'JetBrains Mono',
+          'JetBrains Mono-fallback',
           'Arial',
           ...defaultTheme.fontFamily.mono,
         ],

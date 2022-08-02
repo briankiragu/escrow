@@ -39,8 +39,6 @@ const FundCard: Component<{ fund: IFund }> = (props) => {
    * @author Brian Kariuki <bkariuki@hotmail.com>
    */
   const handleCloseDialog = (type: 'close' | 'cancel'): void => {
-    console.log('Being clicked');
-
     // Close the dialog.
     dialogEl.close(type);
 

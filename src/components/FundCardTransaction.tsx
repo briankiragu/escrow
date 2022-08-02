@@ -11,11 +11,11 @@ const FundCardTransaction: Component<{ transaction: ITransaction }> = (
   const { toRegionalCurrency, toHumanDate } = useFormatting();
 
   return (
-    <div class="flex justify-between items-end">
-      <span class="text-slate-500 text-sm font-medium">
+    <div class="mb-3 grid grid-cols-4 gap-4 items-end">
+      <span class="col-span-2 text-slate-500 text-sm font-medium">
         {toHumanDate(new Date(props.transaction.created_at))}
       </span>
-      <span class="text text-slate-500 font-semibold">
+      <span class="col-span-2 text-right text-slate-500 font-semibold font-mono break-words">
         {toRegionalCurrency(props.transaction.amount)}
       </span>
     </div>

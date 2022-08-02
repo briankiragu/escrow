@@ -1,8 +1,9 @@
-import { describe, test } from 'vitest';
+import { describe, it } from 'vitest';
+import { render } from 'solid-testing-library';
+import App from '@/App';
 
 describe('App', () => {
-  test.todo('renders without crashing', () => {});
-  test.todo('displays the welcome message');
-  test.todo('displays the incoming balance');
-  test.todo('displays the outgoing balance');
+  it('renders without crashing', () => {
+    render(<App />);
+  });
 });

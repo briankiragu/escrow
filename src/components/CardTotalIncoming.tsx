@@ -10,7 +10,7 @@ const CardTotalIncoming: Component<{ amount: number }> = (props) => {
   return (
     <div class="transition-shadow shadow-md rounded-md bg-blue-500 p-5 hover:shadow-lg">
       <span class="text-blue-100 font-medium">Total Incoming</span>
-      <h3 class="text-blue-50 text-4xl font-extrabold">
+      <h3 class="text-blue-50 text-4xl font-extrabold font-mono">
         {toRegionalCurrency(props.amount)}
       </h3>
     </div>
