@@ -8,6 +8,9 @@ import { IFund } from '@/interfaces/models';
 const CardTotalIncoming = lazy(() => import('@/components/CardTotalIncoming'));
 const CardTotalOutgoing = lazy(() => import('@/components/CardTotalOutgoing'));
 const FundCard = lazy(() => import('@/components/FundCard'));
+const FundButtonFloating = lazy(
+  () => import('@/components/FundButtonFloating')
+);
 
 const App: Component = () => {
   // Create fake incoming and outgoing data.
@@ -71,7 +74,7 @@ const App: Component = () => {
   ]);
 
   return (
-    <div class="min-h-screen p-6 lg:px-28 py-12 bg-[whitesmoke]">
+    <div class="relative min-h-screen p-6 lg:px-28 py-12 bg-[whitesmoke]">
       {/* Totals Section */}
       <section class="h-[410px] mb-6 flex gap-4 flex-col">
         {/* Introductory text */}
@@ -91,6 +94,9 @@ const App: Component = () => {
           <For each={funds}>{(fund) => <FundCard fund={fund} />}</For>
         </div>
       </section>
+
+      {/* Floating action button */}
+      <FundButtonFloating />
     </div>
   );
 };

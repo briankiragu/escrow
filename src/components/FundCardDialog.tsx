@@ -78,7 +78,7 @@ const FundCardDialog: Component<{
       </div>
 
       {/* Fiscal information */}
-      <div class="transition-all overflow-y-scroll max-h-[30vh] pt-4 px-6 flex flex-col text-slate-600">
+      <div class="transition-all overflow-y-scroll max-h-[30vh] pt-4 px-6 flex flex-col text-slate-600 lg:max-h-[40vh]">
         {/* Expected total (if was provided during project creation) */}
         <Show when={props.fund.expected_total !== null}>
           <div class="mb-1 flex justify-between items-end tracking-tight">
